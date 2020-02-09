@@ -36,8 +36,7 @@ namespace Criptografia
             fs.Close();
 
             Dictionary<string, object> postParameters = new Dictionary<string, object>();
-            postParameters.Add("answer", "answer.json");
-            postParameters.Add("file", new FormUpload.FileParameter(data, @"C:\temp\answer.json", "application/json"));
+            postParameters.Add("answer", new FormUpload.FileParameter(data, "answer.json", "application/json"));
 
             string postURL = (submitSolution + token);
             string userAgent = DefaultUserAgent;
