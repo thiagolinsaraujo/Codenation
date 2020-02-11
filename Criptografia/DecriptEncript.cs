@@ -68,7 +68,7 @@ namespace Criptografia
         {
             byte[] buffer = Encoding.Default.GetBytes(Decifrado);
             SHA1CryptoServiceProvider cryptoTransformSHA1 = new SHA1CryptoServiceProvider();
-            Resumo_Criptografico = BitConverter.ToString(cryptoTransformSHA1.ComputeHash(buffer)).Replace("-", "");
+            Resumo_Criptografico = BitConverter.ToString(cryptoTransformSHA1.ComputeHash(buffer)).Replace("-", "").ToLower();
         }
     }
 }
