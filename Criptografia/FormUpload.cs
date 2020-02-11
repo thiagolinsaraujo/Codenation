@@ -9,16 +9,16 @@ namespace Criptografia
     public class FormUpload
     {
         private static readonly Encoding encoding = Encoding.UTF8;
-        public static HttpWebResponse MultipartFormDataPost(string postUrl, string userAgent, Dictionary<string, object> postParameters)
+        public static HttpWebResponse MultipartFormDataPost(string postUrl, Dictionary<string, object> postParameters)
         {
             string formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid());
             string contentType = "multipart/form-data; boundary=" + formDataBoundary;
 
             byte[] formData = GetMultipartFormData(postParameters, formDataBoundary);
 
-            return PostForm(postUrl, userAgent, contentType, formData);
+            return PostForm(postUrl, contentType, formData);
         }
-        private static HttpWebResponse PostForm(string postUrl, string userAgent, string contentType, byte[] formData)
+        private static HttpWebResponse PostForm(string postUrl, string contentType, byte[] formData)
         {
             HttpWebRequest request = WebRequest.Create(postUrl) as HttpWebRequest;
 
@@ -29,7 +29,6 @@ namespace Criptografia
 
             request.Method = "POST";
             request.ContentType = contentType;
-            request.UserAgent = userAgent;
             request.CookieContainer = new CookieContainer();
             request.ContentLength = formData.Length;
 
@@ -62,7 +61,7 @@ namespace Criptografia
                         boundary,
                         param.Key,
                         fileToUpload.FileName ?? param.Key,
-                        fileToUpload.ContentType ?? "application/octet-stream");
+                        fileToUpload.ContentType ?? "multipart/form-data");
 
                     formDataStream.Write(encoding.GetBytes(header), 0, encoding.GetByteCount(header));
 

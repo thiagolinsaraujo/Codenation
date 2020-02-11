@@ -12,7 +12,6 @@ namespace Criptografia
         private const string token = "35e59363ac83631a21b26c0ecbe898f68096b651";
         private const string generateData = "https://api.codenation.dev/v1/challenge/dev-ps/generate-data?token=";
         private const string submitSolution = "https://api.codenation.dev/v1/challenge/dev-ps/submit-solution?token=";
-        private const string DefaultUserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36 OPR/20.0.1387.82";
 
         public DecriptEncript GetJson()
         {
@@ -30,7 +29,7 @@ namespace Criptografia
 
         public void SendFile()
         {
-            FileStream fs = new FileStream(@"C:\temp\answer.json", FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(@"/Users/thiagoaraujo/TI/project/Codenation/answer.json", FileMode.Open, FileAccess.Read);
             byte[] data = new byte[fs.Length];
             fs.Read(data, 0, data.Length);
             fs.Close();
@@ -39,8 +38,7 @@ namespace Criptografia
             postParameters.Add("answer", new FormUpload.FileParameter(data, "answer.json", "application/json"));
 
             string postURL = (submitSolution + token);
-            string userAgent = DefaultUserAgent;
-            HttpWebResponse webResponse = FormUpload.MultipartFormDataPost(postURL, userAgent, postParameters);
+            HttpWebResponse webResponse = FormUpload.MultipartFormDataPost(postURL, postParameters);
 
             StreamReader responseReader = new StreamReader(webResponse.GetResponseStream());
             string fullResponse = responseReader.ReadToEnd();
@@ -51,7 +49,7 @@ namespace Criptografia
 
         public void CreateFile(DecriptEncript decriptEncript)
         {
-            string fileName = @"C:\temp\answer.json";
+            string fileName = @"/Users/thiagoaraujo/TI/project/Codenation/answer.json";
             FileInfo fi = new FileInfo(fileName);
 
             try
